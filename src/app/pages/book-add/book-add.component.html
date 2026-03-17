@@ -1,0 +1,43 @@
+<h2>Add Book</h2>
+
+<p>
+  <a routerLink="/list">Back to Book List</a>
+</p>
+
+<form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+  <p>
+    <label for="title">Title:</label><br>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      [(ngModel)]="book.title"
+      required>
+  </p>
+
+  <p>
+    <label for="author">Author:</label><br>
+    <input
+      type="text"
+      id="author"
+      name="author"
+      [(ngModel)]="book.author"
+      required>
+  </p>
+
+  <p>
+    <label for="description">Description:</label><br>
+    <textarea
+      id="description"
+      name="description"
+      [(ngModel)]="book.description"
+      rows="5"
+      required></textarea>
+  </p>
+
+  <button type="submit" [disabled]="bookForm.invalid">Add Book</button>
+</form>
+
+<p *ngIf="successMessage">
+  {{ successMessage }}
+</p>
