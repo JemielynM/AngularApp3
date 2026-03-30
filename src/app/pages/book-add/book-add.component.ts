@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book.model';
 
@@ -27,17 +27,22 @@ export class BookAddComponent {
   ) {}
 
   onSubmit(): void {
-    this.bookService.addBook(this.book).subscribe(() => {
-      this.successMessage = 'Book added successfully!';
-      this.book = {
-        title: '',
-        author: '',
-        description: ''
-      };
+    this.bookService.addBook(this.book).subscribe((response: any) => {
+      if (response.success) {
+        this.successMessage = 'Book added successfully!';
+        this.book = {
+          title: '',
+          author: '',
+          description: ''
+        };
 
-      setTimeout(() => {
-        this.router.navigate(['/list']);
-      }, 1000);
+        setTimeout(() => {
+          this.router.navigate(['/list']);
+        }, 1000);
+      } else {
+        alert('Add failed');
+        console.log(response);
+      }
     });
   }
 }

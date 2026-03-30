@@ -18,4 +18,7 @@ export class BookService {
   addBook(book: Book) {
     return this.http.post(`${this.apiUrl}/add_book.php`, book);
   }
+  deleteBook(id: number) {
+  return this.http.post(`${this.apiUrl}/delete_book.php`, { id });
+  }
 }
