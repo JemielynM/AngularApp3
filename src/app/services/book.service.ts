@@ -21,4 +21,7 @@ export class BookService {
   deleteBook(id: number) {
   return this.http.post(`${this.apiUrl}/delete_book.php`, { id });
   }
+  updateBook(book: Book) {
+  return this.http.post(`${this.apiUrl}/update_book.php`, book);
+  }
 }

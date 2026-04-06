@@ -29,7 +29,7 @@ export class BookDeleteComponent implements OnInit {
 }
 
   // Delete selected book
-  deleteBook(id: number) {
+  deleteBook(id: number): void {
   this.bookService.deleteBook(id).subscribe(() => {
     this.loadBooks(); // 🔥 reload list after delete
   });

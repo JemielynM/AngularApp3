@@ -11,9 +11,7 @@
   <p><b>Author:</b> {{ book.author }}</p>
   <p>{{ book.description }}</p>
 
-  <button (click)="deleteBook(book.id)">
-    Delete
-  </button>
+  <button (click)="deleteBook(book.id!)">Delete</button>
 
   <hr>
 </div>
