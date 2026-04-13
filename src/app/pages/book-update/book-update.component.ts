@@ -1,31 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book.service';
+import { Book } from '../../models/book.model';
 
 @Component({
   selector: 'app-book-update',
-  templateUrl: './book-update.component.html'
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './book-update.component.html',
+  styleUrl: './book-update.component.css'
 })
-export class BookUpdateComponent {
-  books: any[] = [];
-  selectedBook: any = null;
+export class BookUpdateComponent implements OnInit {
+  books: Book[] = [];
+  selectedBook: Book | null = null;
+  message = '';
 
   constructor(private bookService: BookService) {}
 
-  ngOnInit() {
-    this.bookService.getBooks().subscribe(data => {
+  ngOnInit(): void {
+    this.loadBooks();
+  }
+
+  loadBooks(): void {
+    this.bookService.getBooks().subscribe((data) => {
       this.books = data;
     });
   }
 
-  editBook(book: any) {
+  editBook(book: Book): void {
     this.selectedBook = { ...book };
+    this.message = '';
   }
 
-  updateBook() {
-    this.bookService.updateBook(this.selectedBook).subscribe(() => {
-      alert('Book updated!');
-      this.selectedBook = null;
-      this.ngOnInit();
+  updateBook(): void {
+    if (!this.selectedBook) return;
+
+    this.bookService.updateBook(this.selectedBook).subscribe((response: any) => {
+      if (response.success) {
+        this.message = 'Book updated successfully.';
+        this.selectedBook = null;
+        this.loadBooks();
+      } else {
+        this.message = 'Update failed.';
+      }
     });
   }
 }

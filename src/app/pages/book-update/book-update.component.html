@@ -1,5 +1,11 @@
 <h2>Update Book</h2>
 
+<p *ngIf="message">{{ message }}</p>
+
+<div *ngIf="books.length === 0">
+  No books available.
+</div>
+
 <div *ngFor="let book of books">
   <h3>{{ book.title }}</h3>
   <p><b>Author:</b> {{ book.author }}</p>
@@ -9,13 +15,23 @@
   <hr>
 </div>
 
-<!-- EDIT FORM -->
 <div *ngIf="selectedBook">
   <h3>Edit Book</h3>
 
-  <input [(ngModel)]="selectedBook.title" placeholder="Title"><br>
-  <input [(ngModel)]="selectedBook.author" placeholder="Author"><br>
-  <textarea [(ngModel)]="selectedBook.description"></textarea><br>
+  <p>
+    <label>Title:</label><br>
+    <input [(ngModel)]="selectedBook.title" name="title">
+  </p>
+
+  <p>
+    <label>Author:</label><br>
+    <input [(ngModel)]="selectedBook.author" name="author">
+  </p>
+
+  <p>
+    <label>Description:</label><br>
+    <textarea [(ngModel)]="selectedBook.description" name="description" rows="5"></textarea>
+  </p>
 
   <button (click)="updateBook()">Save</button>
 </div>
